@@ -2,19 +2,26 @@
 
 public class TwoBodySimulation : Simulation
 {
-    [SerializeField] private GameObject body1Prefab;
-    [SerializeField] private GameObject body2Prefab;
+    //[SerializeField] private GameObject body1Prefab;
+    //[SerializeField] private GameObject body2Prefab;
+    private TwoBodyPrefabs prefabs;
 
     [Header("Simulation Properties")]
     [SerializeField, Min(0)] private float newtonG = 1f;
     [SerializeField, Min(1)] private int numSubsteps = 20;
     [SerializeField, Min(0)] private float mass1 = 1f;
     [SerializeField, Min(0)] private float mass2 = 1f;
+
+    [Header("Initial Conditions")]
     [SerializeField] private Vector3 initPosition1 = Vector3.left;
     [SerializeField] private Vector3 initPosition2 = Vector3.right;
     [SerializeField] private Vector3 initVelocity1 = Vector3.up;
     [SerializeField] private Vector3 initVelocity2 = Vector3.down;
 
+    [Header("Origin Offset")]
+    [SerializeField] private Vector3 originOffset = Vector3.zero;
+
+    // References to the actual transforms held in TwoBodyPrefabs
     private Transform body1;
     private Transform body2;
 
@@ -43,6 +50,33 @@ public class TwoBodySimulation : Simulation
 
     private void Awake()
     {
+        if (!TryGetComponent(out prefabs))
+        {
+            Debug.LogWarning("No TwoBodyPrefabs component found.");
+            Pause();
+            return;
+        }
+
+        prefabs.InstantiateAllPrefabs();
+
+        body1 = prefabs.body1;
+        body1.localScale = 2 * Mathf.Pow(3f * mass1 / 4f / Mathf.PI, 0.333f) * Vector3.one;
+        body1.position = initPosition1;
+
+        body2 = prefabs.body2;
+        body2.localScale = 2 * Mathf.Pow(3f * mass2 / 4f / Mathf.PI, 0.333f) * Vector3.one;
+        body2.position = initPosition2;
+
+        if (prefabs.centerOfMass)
+        {
+            prefabs.centerOfMass.localScale = 0.5f * Vector3.one;
+        }
+
+        if (prefabs.coordinateOrigin)
+        {
+            prefabs.coordinateOrigin.position = originOffset;
+        }
+
         Reset();
     }
 
@@ -55,7 +89,6 @@ public class TwoBodySimulation : Simulation
 
         if (resetTimer >= Period)
         {
-            Debug.Log("Resetting after " + resetTimer + " s");
             resetTimer = 0;
             r = initPosition1 - initPosition2;
             v = initVelocity1 - initVelocity2;
@@ -78,6 +111,9 @@ public class TwoBodySimulation : Simulation
         // Update each body's position
         body1.position = R + (mass1 / M * r);
         body2.position = R - (mass2 / M * r);
+
+        // Let TwoBodyPrefabs know to update its vectors
+        prefabs.UpdateVectors();
     }
 
     private void StepForward(float deltaTime)
@@ -97,19 +133,6 @@ public class TwoBodySimulation : Simulation
     {
         time = 0;
         resetTimer = 0;
-
-        if (body1 == null)
-        {
-            body1 = Instantiate(body1Prefab, initPosition1, Quaternion.identity, transform).transform;
-            body1.transform.localScale = 2 * Mathf.Pow(3f * mass1 / 4f / Mathf.PI, 0.333f) * Vector3.one;
-            body1.name = "Body 1";
-        }
-        if (body2 == null)
-        {
-            body2 = Instantiate(body2Prefab, initPosition2, Quaternion.identity, transform).transform;
-            body2.transform.localScale = 2 * Mathf.Pow(3f * mass2 / 4f / Mathf.PI, 0.333f) * Vector3.one;
-            body2.name = "Body 2";
-        }
 
         r = initPosition1 - initPosition2;
         v = initVelocity1 - initVelocity2;

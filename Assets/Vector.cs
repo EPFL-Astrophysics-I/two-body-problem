@@ -16,7 +16,7 @@ public class Vector : MonoBehaviour
     public bool headless = false;
     public enum AlignAxis { X, Y, Z }
     public AlignAxis headAlignment = default;
-    [Range(0, 1), Tooltip("As a fraction of magnitude")]public float headLength = 0.1f;
+    [Range(0, 5)] public float headLength = 0.5f;
     [Range(0, 90)] public float headAngle = 45f;
     [Min(0)] public int headEndCapVertices = 5;
     [Min(0)] public int headCornerVertices = 0;
@@ -214,7 +214,7 @@ public class Vector : MonoBehaviour
 
         // The head lives in the local XY plane which spans the alignment axis and the original vector
         Vector3 localXHat = Vector3.Cross(localYHat, localZHat);
-        float magnitude = headLength * Displacement.magnitude;
+        float magnitude = headLength; // * Displacement.magnitude;
         float angle = headAngle * Mathf.Deg2Rad;
         Vector3 startPosition = HeadPosition + magnitude * (Mathf.Sin(angle) * localXHat + Mathf.Cos(angle) * localYHat);
         Vector3 endPosition = HeadPosition + magnitude * (Mathf.Sin(-angle) * localXHat + Mathf.Cos(angle) * localYHat);
