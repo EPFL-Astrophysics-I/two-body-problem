@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class TwoBodyPrefabs : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class TwoBodyPrefabs : MonoBehaviour
 
     public void SetCenterOfMassVisibility(bool visible)
     {
-        if (centerOfMass != null)
+        if (centerOfMass)
         {
             centerOfMass.gameObject.SetActive(visible);
         }
@@ -39,7 +40,7 @@ public class TwoBodyPrefabs : MonoBehaviour
 
     public void SetCoordinateOriginVisibility(bool visible)
     {
-        if (coordinateOrigin != null)
+        if (coordinateOrigin)
         {
             coordinateOrigin.gameObject.SetActive(visible);
         }
@@ -47,7 +48,7 @@ public class TwoBodyPrefabs : MonoBehaviour
 
     public void SetPositionVector1Visibility(bool visible)
     {
-        if (positionVector1 != null)
+        if (positionVector1)
         {
             positionVector1.gameObject.SetActive(visible);
         }
@@ -55,7 +56,7 @@ public class TwoBodyPrefabs : MonoBehaviour
 
     public void SetPositionVector2Visibility(bool visible)
     {
-        if (positionVector2 != null)
+        if (positionVector2)
         {
             positionVector2.gameObject.SetActive(visible);
         }
@@ -63,7 +64,7 @@ public class TwoBodyPrefabs : MonoBehaviour
 
     public void SetPositionVector3Visibility(bool visible)
     {
-        if (positionVector3 != null)
+        if (positionVector3)
         {
             positionVector3.gameObject.SetActive(visible);
         }
@@ -71,7 +72,7 @@ public class TwoBodyPrefabs : MonoBehaviour
 
     public void SetPositionVectorCOMVisibility(bool visible)
     {
-        if (positionVectorCOM != null)
+        if (positionVectorCOM)
         {
             positionVectorCOM.gameObject.SetActive(visible);
         }
@@ -79,7 +80,7 @@ public class TwoBodyPrefabs : MonoBehaviour
 
     public void SetTrail1Visibility(bool visible)
     {
-        if (trail1 != null)
+        if (trail1)
         {
             trail1.gameObject.SetActive(visible);
         }
@@ -87,7 +88,7 @@ public class TwoBodyPrefabs : MonoBehaviour
 
     public void SetTrail2Visibility(bool visible)
     {
-        if (trail2 != null)
+        if (trail2)
         {
             trail2.gameObject.SetActive(visible);
         }
@@ -95,7 +96,7 @@ public class TwoBodyPrefabs : MonoBehaviour
 
     public void SetForceVector1Visibility(bool visible)
     {
-        if (forceVector1 != null)
+        if (forceVector1)
         {
             forceVector1.gameObject.SetActive(visible);
         }
@@ -103,7 +104,7 @@ public class TwoBodyPrefabs : MonoBehaviour
 
     public void SetForceVector2Visibility(bool visible)
     {
-        if (forceVector2 != null)
+        if (forceVector2)
         {
             forceVector2.gameObject.SetActive(visible);
         }
@@ -129,79 +130,79 @@ public class TwoBodyPrefabs : MonoBehaviour
 
     public void InstantiateAllPrefabs()
     {
-        if (body1Prefab != null)
+        if (body1Prefab)
         {
             body1 = Instantiate(body1Prefab, transform).transform;
             body1.name = "Body 1";
         }
-        if (body2Prefab != null)
+        if (body2Prefab)
         {
             body2 = Instantiate(body2Prefab, transform).transform;
             body2.name = "Body 2";
         }
 
-        if (centerOfMassPrefab != null)
+        if (centerOfMassPrefab)
         {
             centerOfMass = Instantiate(centerOfMassPrefab, Vector3.zero, Quaternion.identity, transform).transform;
             centerOfMass.name = "Center of Mass";
         }
 
-        if (coordinateOriginPrefab != null)
+        if (coordinateOriginPrefab)
         {
             coordinateOrigin = Instantiate(coordinateOriginPrefab, Vector3.zero, Quaternion.identity, transform).transform;
             coordinateOrigin.name = "Coordinate Origin";
         }
 
-        if (positionVector1Prefab != null)
+        if (positionVector1Prefab)
         {
             positionVector1 = Instantiate(positionVector1Prefab, Vector3.zero, Quaternion.identity, transform).GetComponent<Vector>();
             positionVector1.SetPositions(Vector3.zero, Vector3.zero);
             positionVector1.name = "Position Vector 1";
         }
 
-        if (positionVector2Prefab != null)
+        if (positionVector2Prefab)
         {
             positionVector2 = Instantiate(positionVector2Prefab, Vector3.zero, Quaternion.identity, transform).GetComponent<Vector>();
             positionVector2.SetPositions(Vector3.zero, Vector3.zero);
             positionVector2.name = "Position Vector 2";
         }
 
-        if (positionVector3Prefab != null)
+        if (positionVector3Prefab)
         {
             positionVector3 = Instantiate(positionVector3Prefab, Vector3.zero, Quaternion.identity, transform).GetComponent<Vector>();
             positionVector3.SetPositions(Vector3.zero, Vector3.zero);
             positionVector3.name = "Position Vector 3";
         }
 
-        if (positionVectorCOMPrefab != null)
+        if (positionVectorCOMPrefab)
         {
             positionVectorCOM = Instantiate(positionVectorCOMPrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<Vector>();
             positionVectorCOM.SetPositions(Vector3.zero, Vector3.zero);
             positionVectorCOM.name = "Position Vector COM";
         }
 
-        if (trail1Prefab != null)
+        if (trail1Prefab)
         {
             trail1 = Instantiate(trail1Prefab, Vector3.zero, Quaternion.identity, transform).GetComponent<LineRenderer>();
             trail1.positionCount = 0;
             trail1.name = "Trail 1";
         }
 
-        if (trail2Prefab != null)
+        if (trail2Prefab)
         {
             trail2 = Instantiate(trail2Prefab, Vector3.zero, Quaternion.identity, transform).GetComponent<LineRenderer>();
             trail2.positionCount = 0;
             trail2.name = "Trail 2";
         }
 
-        if (forceVector1Prefab != null)
+        if (forceVector1Prefab)
         {
             forceVector1 = Instantiate(forceVector1Prefab, Vector3.zero, Quaternion.identity, transform).GetComponent<Vector>();
             forceVector1.SetPositions(Vector3.zero, Vector3.zero);
             forceVector1.name = "Force Vector 1";
         }
 
-        if (forceVector2Prefab != null)
+        if (forceVector2Prefab)
         {
             forceVector2 = Instantiate(forceVector2Prefab, Vector3.zero, Quaternion.identity, transform).GetComponent<Vector>();
             forceVector2.SetPositions(Vector3.zero, Vector3.zero);
@@ -211,19 +212,25 @@ public class TwoBodyPrefabs : MonoBehaviour
 
     public void UpdateVectors()
     {
-        if (positionVector1 != null)
+        if (positionVector1)
         {
             positionVector1.SetPositions(coordinateOrigin.position, body1.position);
             positionVector1.Redraw();
         }
 
-        if (positionVector2 != null)
+        if (positionVector2)
         {
             positionVector2.SetPositions(coordinateOrigin.position, body2.position);
             positionVector2.Redraw();
         }
 
-        if (positionVectorCOM != null)
+        if (positionVector3)
+        {
+            positionVector3.SetPositions(body2.position, body1.position);
+            positionVector3.Redraw();
+        }
+
+        if (positionVectorCOM)
         {
             positionVectorCOM.SetPositions(coordinateOrigin.position, centerOfMass.position);
             positionVectorCOM.Redraw();
@@ -233,16 +240,52 @@ public class TwoBodyPrefabs : MonoBehaviour
         Vector3 r = body2.position - body1.position;
         Vector3 force = 3 * r / r.sqrMagnitude;
 
-        if (forceVector1 != null)
+        if (forceVector1)
         {
             forceVector1.SetPositions(body1.position, body1.position + force);
             forceVector1.Redraw();
         }
 
-        if (forceVector2 != null)
+        if (forceVector2)
         {
             forceVector2.SetPositions(body2.position, body2.position - force);
             forceVector2.Redraw();
         }
+    }
+
+    public void LerpOriginToPosition(Vector3 position, float moveTime, bool draggable = false)
+    {
+        if (!coordinateOrigin)
+        {
+            return;
+        }
+
+        //StopAllCoroutines();
+        StartCoroutine(MoveCoordinateOriginToPosition(position, moveTime, draggable));
+    }
+
+    private IEnumerator MoveCoordinateOriginToPosition(Vector3 targetPosition, float moveTime, bool draggable)
+    {
+        float time = 0;
+        Vector3 startPosition = coordinateOrigin.position;
+
+        if (coordinateOrigin.TryGetComponent(out DraggableObject draggableObject))
+        {
+            draggableObject.draggable = false;
+        }
+
+        while (time < moveTime)
+        {
+            time += Time.deltaTime;
+            coordinateOrigin.position = Vector3.Lerp(startPosition, targetPosition, time / moveTime);
+            yield return null;
+        }
+
+        coordinateOrigin.position = targetPosition;
+
+        if (draggableObject)
+        {
+            draggableObject.draggable = draggable;
+        }        
     }
 }

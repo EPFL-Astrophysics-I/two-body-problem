@@ -18,9 +18,6 @@ public class TwoBodySimulation : Simulation
     [SerializeField] private Vector3 initVelocity1 = Vector3.up;
     [SerializeField] private Vector3 initVelocity2 = Vector3.down;
 
-    [Header("Origin Offset")]
-    [SerializeField] private Vector3 originOffset = Vector3.zero;
-
     // References to the actual transforms held in TwoBodyPrefabs
     private Transform body1;
     private Transform body2;
@@ -70,11 +67,6 @@ public class TwoBodySimulation : Simulation
         if (prefabs.centerOfMass)
         {
             prefabs.centerOfMass.localScale = 0.5f * Vector3.one;
-        }
-
-        if (prefabs.coordinateOrigin)
-        {
-            prefabs.coordinateOrigin.position = originOffset;
         }
 
         Reset();

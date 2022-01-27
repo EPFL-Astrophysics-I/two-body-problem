@@ -1,9 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TwoBodySlideController : SimulationSlideController
 {
+    [Header("Coordinate Origin")]
+    [SerializeField] private bool originIsDraggable;
+    [SerializeField] private Vector3 originPosition = Vector3.zero;
+    [SerializeField] private float originMoveTime = 1;
+
     [Header("Object Visibility")]
     [SerializeField] private bool centerOfMass;
     [SerializeField] private bool coordinateOrigin;
@@ -48,5 +51,8 @@ public class TwoBodySlideController : SimulationSlideController
         prefabs.SetForceVector2Visibility(forceVector2);
         prefabs.SetBodyLabel1Visibility(bodyLabel1);
         prefabs.SetBodyLabel2Visibility(bodyLabel2);
+
+        // Move coordinate origin into position
+        prefabs.LerpOriginToPosition(originPosition, originMoveTime, originIsDraggable);
     }
 }
