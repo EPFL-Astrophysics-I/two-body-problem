@@ -50,6 +50,11 @@ public class OneBodySimulation : Simulation
 
     public void SetPosition(Vector3 position)
     {
+        if (!prefabs)
+        {
+            return;
+        }
+
         prefabs.body.position = position;
         prefabs.UpdateVectors(originPosition);
     }

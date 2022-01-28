@@ -5586,7 +5586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showHeader: 1
-  currentSlideIndex: 7
+  currentSlideIndex: 0
   fadeInTime: 0.3
   fadeInDelay: 0
   fadeOutTime: 0.3
