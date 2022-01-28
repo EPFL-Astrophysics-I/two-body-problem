@@ -10,12 +10,14 @@ public class TwoBodyPrefabs : MonoBehaviour
     [SerializeField] private GameObject centerOfMassPrefab;
     [SerializeField] private GameObject positionVector1Prefab;
     [SerializeField] private GameObject positionVector2Prefab;
-    [SerializeField] private GameObject positionVector3Prefab;
+    [SerializeField] private GameObject positionVector3WhitePrefab;
+    [SerializeField] private GameObject positionVector3BlackPrefab;
     [SerializeField] private GameObject positionVectorCOMPrefab;
     [SerializeField] private GameObject trail1Prefab;
     [SerializeField] private GameObject trail2Prefab;
     [SerializeField] private GameObject forceVector1Prefab;
     [SerializeField] private GameObject forceVector2Prefab;
+    [SerializeField] private GameObject angularMomentumVectorPrefab;
 
     [HideInInspector] public Transform body1;
     [HideInInspector] public Transform body2;
@@ -23,12 +25,14 @@ public class TwoBodyPrefabs : MonoBehaviour
     [HideInInspector] public Transform centerOfMass;
     [HideInInspector] public Vector positionVector1;
     [HideInInspector] public Vector positionVector2;
-    [HideInInspector] public Vector positionVector3;
+    [HideInInspector] public Vector positionVector3White;
+    [HideInInspector] public Vector positionVector3Black;
     [HideInInspector] public Vector positionVectorCOM;
     [HideInInspector] public LineRenderer trail1;
     [HideInInspector] public LineRenderer trail2;
     [HideInInspector] public Vector forceVector1;
     [HideInInspector] public Vector forceVector2;
+    [HideInInspector] public Vector angularMomentumVector;
 
     public void SetCenterOfMassVisibility(bool visible)
     {
@@ -62,11 +66,19 @@ public class TwoBodyPrefabs : MonoBehaviour
         }
     }
 
-    public void SetPositionVector3Visibility(bool visible)
+    public void SetPositionVector3WhiteVisibility(bool visible)
     {
-        if (positionVector3)
+        if (positionVector3White)
         {
-            positionVector3.gameObject.SetActive(visible);
+            positionVector3White.gameObject.SetActive(visible);
+        }
+    }
+
+    public void SetPositionVector3BlackVisibility(bool visible)
+    {
+        if (positionVector3Black)
+        {
+            positionVector3Black.gameObject.SetActive(visible);
         }
     }
 
@@ -128,6 +140,14 @@ public class TwoBodyPrefabs : MonoBehaviour
         }
     }
 
+    public void SetAngularMomentumVectorVisibility(bool visible)
+    {
+        if (angularMomentumVector)
+        {
+            angularMomentumVector.gameObject.SetActive(visible);
+        }
+    }
+
     public void InstantiateAllPrefabs()
     {
         if (body1Prefab)
@@ -135,6 +155,7 @@ public class TwoBodyPrefabs : MonoBehaviour
             body1 = Instantiate(body1Prefab, transform).transform;
             body1.name = "Body 1";
         }
+
         if (body2Prefab)
         {
             body2 = Instantiate(body2Prefab, transform).transform;
@@ -167,11 +188,18 @@ public class TwoBodyPrefabs : MonoBehaviour
             positionVector2.name = "Position Vector 2";
         }
 
-        if (positionVector3Prefab)
+        if (positionVector3WhitePrefab)
         {
-            positionVector3 = Instantiate(positionVector3Prefab, Vector3.zero, Quaternion.identity, transform).GetComponent<Vector>();
-            positionVector3.SetPositions(Vector3.zero, Vector3.zero);
-            positionVector3.name = "Position Vector 3";
+            positionVector3White = Instantiate(positionVector3WhitePrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<Vector>();
+            positionVector3White.SetPositions(Vector3.zero, Vector3.zero);
+            positionVector3White.name = "Position Vector 3 White";
+        }
+
+        if (positionVector3BlackPrefab)
+        {
+            positionVector3Black = Instantiate(positionVector3BlackPrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<Vector>();
+            positionVector3Black.SetPositions(Vector3.zero, Vector3.zero);
+            positionVector3Black.name = "Position Vector 3 Black";
         }
 
         if (positionVectorCOMPrefab)
@@ -208,6 +236,13 @@ public class TwoBodyPrefabs : MonoBehaviour
             forceVector2.SetPositions(Vector3.zero, Vector3.zero);
             forceVector2.name = "Force Vector 2";
         }
+
+        if (angularMomentumVectorPrefab)
+        {
+            angularMomentumVector = Instantiate(angularMomentumVectorPrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<Vector>();
+            angularMomentumVector.SetPositions(Vector3.zero, Vector3.zero);
+            angularMomentumVector.name = "Angular Momentum Vector";
+        }
     }
 
     public void UpdateVectors()
@@ -224,10 +259,16 @@ public class TwoBodyPrefabs : MonoBehaviour
             positionVector2.Redraw();
         }
 
-        if (positionVector3)
+        if (positionVector3White)
         {
-            positionVector3.SetPositions(body2.position, body1.position);
-            positionVector3.Redraw();
+            positionVector3White.SetPositions(body2.position, body1.position);
+            positionVector3White.Redraw();
+        }
+
+        if (positionVector3Black)
+        {
+            positionVector3Black.SetPositions(body2.position, body1.position);
+            positionVector3Black.Redraw();
         }
 
         if (positionVectorCOM)

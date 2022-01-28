@@ -57,7 +57,11 @@ public class DraggableObject : MonoBehaviour
         if (Input.GetMouseButton(0) && dragging && !clickedOnUIElement)
         {
             // Convert Viewport distance to distance along the world space x- and y-axis
+            // Constrain dragging to within 15% of the border
             Vector2 viewportPosition = mainCamera.ScreenToViewportPoint(Input.mousePosition);
+            float viewportX = Mathf.Clamp(viewportPosition.x, 0.15f, 0.85f);
+            float viewportY = Mathf.Clamp(viewportPosition.y, 0.15f, 0.85f);
+            viewportPosition = new Vector2(viewportX, viewportY);
             Vector2 worldDelta = (viewportPosition - viewportClickedPosition) * visibleWorldXY;
             Vector2 newPosition = startPosition + new Vector3(worldDelta.x, worldDelta.y, 0);
             transform.position = newPosition;

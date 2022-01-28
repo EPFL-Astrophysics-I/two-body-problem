@@ -2,8 +2,6 @@
 
 public class TwoBodySimulation : Simulation
 {
-    //[SerializeField] private GameObject body1Prefab;
-    //[SerializeField] private GameObject body2Prefab;
     private TwoBodyPrefabs prefabs;
 
     [Header("Simulation Properties")]
@@ -17,6 +15,10 @@ public class TwoBodySimulation : Simulation
     [SerializeField] private Vector3 initPosition2 = Vector3.right;
     [SerializeField] private Vector3 initVelocity1 = Vector3.up;
     [SerializeField] private Vector3 initVelocity2 = Vector3.down;
+
+    [Header("Single-Body Equivalent")]
+    [SerializeField] private OneBodySimulation oneBodySim;
+    [SerializeField] private Vector3 oneBodyOffset;
 
     // References to the actual transforms held in TwoBodyPrefabs
     private Transform body1;
@@ -69,6 +71,17 @@ public class TwoBodySimulation : Simulation
             prefabs.centerOfMass.localScale = 0.5f * Vector3.one;
         }
 
+        if (prefabs.angularMomentumVector)
+        {
+            prefabs.angularMomentumVector.SetPositions(Vector3.zero, 3.5f * Vector3.back);
+            prefabs.angularMomentumVector.Redraw();
+        }
+
+        if (oneBodySim)
+        {
+            oneBodySim.originPosition = oneBodyOffset;
+        }
+
         Reset();
     }
 
@@ -106,6 +119,12 @@ public class TwoBodySimulation : Simulation
 
         // Let TwoBodyPrefabs know to update its vectors
         prefabs.UpdateVectors();
+
+        // Update the equivalent single body if assigned
+        if (oneBodySim)
+        {
+            oneBodySim.SetPosition(oneBodyOffset + r);
+        }
     }
 
     private void StepForward(float deltaTime)

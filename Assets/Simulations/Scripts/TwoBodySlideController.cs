@@ -12,7 +12,8 @@ public class TwoBodySlideController : SimulationSlideController
     [SerializeField] private bool coordinateOrigin;
     [SerializeField] private bool positionVector1;
     [SerializeField] private bool positionVector2;
-    [SerializeField] private bool positionVector3;
+    [SerializeField] private bool positionVector3White;
+    [SerializeField] private bool positionVector3Black;
     [SerializeField] private bool positionVectorCOM;
     [SerializeField] private bool trail1;
     [SerializeField] private bool trail2;
@@ -20,6 +21,7 @@ public class TwoBodySlideController : SimulationSlideController
     [SerializeField] private bool forceVector2;
     [SerializeField] private bool bodyLabel1;
     [SerializeField] private bool bodyLabel2;
+    [SerializeField] private bool angularMomentumVector;
 
     private TwoBodyPrefabs prefabs;
 
@@ -43,7 +45,8 @@ public class TwoBodySlideController : SimulationSlideController
         prefabs.SetCenterOfMassVisibility(centerOfMass);
         prefabs.SetPositionVector1Visibility(positionVector1);
         prefabs.SetPositionVector2Visibility(positionVector2);
-        prefabs.SetPositionVector3Visibility(positionVector3);
+        prefabs.SetPositionVector3WhiteVisibility(positionVector3White);
+        prefabs.SetPositionVector3BlackVisibility(positionVector3Black);
         prefabs.SetPositionVectorCOMVisibility(positionVectorCOM);
         prefabs.SetTrail1Visibility(trail1);
         prefabs.SetTrail2Visibility(trail2);
@@ -51,6 +54,7 @@ public class TwoBodySlideController : SimulationSlideController
         prefabs.SetForceVector2Visibility(forceVector2);
         prefabs.SetBodyLabel1Visibility(bodyLabel1);
         prefabs.SetBodyLabel2Visibility(bodyLabel2);
+        prefabs.SetAngularMomentumVectorVisibility(angularMomentumVector);
 
         // Move coordinate origin into position
         prefabs.LerpOriginToPosition(originPosition, originMoveTime, originIsDraggable);
