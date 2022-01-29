@@ -473,6 +473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragPlane: 0
   draggable: 0
+  onStartDrag: {fileID: 11400000, guid: 2afe2ddf9bb644dc4a8946806f460dd3, type: 2}
 --- !u!1 &3853705164153146327
 GameObject:
   m_ObjectHideFlags: 0

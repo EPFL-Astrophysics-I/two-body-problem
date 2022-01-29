@@ -7,6 +7,9 @@ public class DraggableObject : MonoBehaviour
     public DragPlane dragPlane = DragPlane.XY;
 
     public bool draggable = true;
+    public GameEvent onStartDrag;
+    public GameEvent onDragging;
+    public GameEvent onEndDrag;
 
     private Camera mainCamera;
     private bool clickedOnUIElement;
@@ -50,6 +53,11 @@ public class DraggableObject : MonoBehaviour
                 float width = height * mainCamera.aspect;
                 visibleWorldXY = new Vector2(width, height);
                 dragging = true;
+
+                if (onStartDrag)
+                {
+                    onStartDrag.Raise();
+                }
             }
         }
 
@@ -65,12 +73,22 @@ public class DraggableObject : MonoBehaviour
             Vector2 worldDelta = (viewportPosition - viewportClickedPosition) * visibleWorldXY;
             Vector2 newPosition = startPosition + new Vector3(worldDelta.x, worldDelta.y, 0);
             transform.position = newPosition;
+
+            if (onDragging)
+            {
+                onDragging.Raise();
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             clickedOnUIElement = false;
             dragging = false;
+
+            if (onEndDrag)
+            {
+                onEndDrag.Raise();
+            }
         }
     }
 }

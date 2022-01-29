@@ -788,7 +788,7 @@ GameObject:
   - component: {fileID: 88035779}
   m_Layer: 5
   m_Name: Slide 4
-  m_TagString: Untagged
+  m_TagString: Slide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2470,7 +2470,7 @@ GameObject:
   - component: {fileID: 422413158}
   m_Layer: 5
   m_Name: Slide 6
-  m_TagString: Untagged
+  m_TagString: Slide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2842,6 +2842,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 455638241}
+  - component: {fileID: 455638243}
+  - component: {fileID: 455638242}
+  - component: {fileID: 455638244}
+  - component: {fileID: 455638245}
   m_Layer: 5
   m_Name: Instruction Text
   m_TagString: Untagged
@@ -2870,6 +2874,86 @@ RectTransform:
   m_AnchoredPosition: {x: 100, y: 50}
   m_SizeDelta: {x: 200, y: 20}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &455638242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455638240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7fe3b11d5144dc3afdcdbaffa7a1f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 1
+  startDelay: 0
+--- !u!225 &455638243
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455638240}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!114 &455638244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455638240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7463ba6a1dc0541cebd7613ffb17f9f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 2afe2ddf9bb644dc4a8946806f460dd3, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 455638242}
+        m_MethodName: TriggerFadeOut
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &455638245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455638240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7463ba6a1dc0541cebd7613ffb17f9f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 3e1dfa41b80094f7abf35065776ee201, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 455638242}
+        m_MethodName: TriggerReset
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &481264747
 GameObject:
   m_ObjectHideFlags: 0
@@ -4611,7 +4695,7 @@ GameObject:
   - component: {fileID: 736254661}
   m_Layer: 5
   m_Name: Slide 2
-  m_TagString: Untagged
+  m_TagString: Slide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4721,7 +4805,7 @@ GameObject:
   - component: {fileID: 737625355}
   m_Layer: 5
   m_Name: Slide 8
-  m_TagString: Untagged
+  m_TagString: Slide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4811,7 +4895,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 737625353}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -5194,7 +5278,7 @@ GameObject:
   - component: {fileID: 862402860}
   m_Layer: 5
   m_Name: Slide 7
-  m_TagString: Untagged
+  m_TagString: Slide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5835,6 +5919,7 @@ MonoBehaviour:
   fadeInDelay: 0
   fadeOutTime: 0.3
   fadeOutDelay: 0
+  onChangeSlide: {fileID: 11400000, guid: 3e1dfa41b80094f7abf35065776ee201, type: 2}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -6558,7 +6643,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Le probl\xE8me \xE0 deux corps est le point de d\xE9part pour comprendre
     le mouvement des plan\xE8tes et les trois lois de Kepler. Vous pouvez en savoir
-    plus sur ces th\xE8mes dans les autres apps du Chaptire 1 ci-dessous."
+    plus sur ces th\xE8mes dans les autres apps de Chaptire 1 ci-dessous."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 350cfcf20da78478f9197161ac83b480, type: 2}
   m_sharedMaterial: {fileID: -1129015340585624399, guid: 350cfcf20da78478f9197161ac83b480,
@@ -8091,7 +8176,7 @@ GameObject:
   - component: {fileID: 1366798434}
   m_Layer: 5
   m_Name: Slide 3
-  m_TagString: Untagged
+  m_TagString: Slide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10513,7 +10598,7 @@ GameObject:
   - component: {fileID: 1852465670}
   m_Layer: 5
   m_Name: Slide 5
-  m_TagString: Untagged
+  m_TagString: Slide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12241,7 +12326,7 @@ GameObject:
   - component: {fileID: 1141384628888250056}
   m_Layer: 5
   m_Name: Title Slide
-  m_TagString: Untagged
+  m_TagString: Slide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12318,7 +12403,7 @@ GameObject:
   - component: {fileID: 1141384629084409387}
   m_Layer: 5
   m_Name: Slide 1
-  m_TagString: Untagged
+  m_TagString: Slide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

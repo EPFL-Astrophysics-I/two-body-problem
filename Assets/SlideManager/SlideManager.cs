@@ -12,6 +12,7 @@ public class SlideManager : MonoBehaviour
     [SerializeField, Min(0)] private float fadeInDelay = 0f;
     [SerializeField, Min(0)] private float fadeOutTime = 0.3f;
     [SerializeField, Min(0)] private float fadeOutDelay = 0f;
+    [SerializeField] private GameEvent onChangeSlide;
 
     private Transform slides;
     private static Camera mainCamera;
@@ -35,8 +36,11 @@ public class SlideManager : MonoBehaviour
         // Hide all UI elements of each slide using its CanvasGroup
         foreach (var canvasGroup in GetComponentsInChildren<CanvasGroup>())
         {
-            canvasGroup.alpha = 0;
-            canvasGroup.blocksRaycasts = false;
+            if (canvasGroup.CompareTag("Slide"))
+            {
+                canvasGroup.alpha = 0;
+                canvasGroup.blocksRaycasts = false;
+            }
         }
 
         // Turn off all simulations initially that have an associated SlideController
@@ -171,6 +175,11 @@ public class SlideManager : MonoBehaviour
         }
 
         currentSlideIndex = slideIndex;
+
+        if (onChangeSlide)
+        {
+            onChangeSlide.Raise();
+        }
     }
 
     private IEnumerator FadeSlide(CanvasGroup canvasGroup, float targetAlpha, float fadeTime, float startDelay = 0)

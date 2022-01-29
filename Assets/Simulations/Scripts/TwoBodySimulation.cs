@@ -85,7 +85,6 @@ public class TwoBodySimulation : Simulation
         if (prefabs.angularMomentumVector)
         {
             Vector3 tailPosition = CenterOfMassPosition();
-            Debug.Log("Tail position " + tailPosition);
             prefabs.angularMomentumVector.SetPositions(tailPosition, tailPosition + 3.5f * Vector3.back);
             prefabs.angularMomentumVector.Redraw();
         }
@@ -178,9 +177,9 @@ public class TwoBodySimulation : Simulation
             period = 2 * Mathf.PI * Mathf.Sqrt(a * a * a / newtonG / totalMass);
         }
 
-        Debug.Log("Period is " + Period + " s");
-        Debug.Log("CM is at " + initPositionCM);
-        Debug.Log("CM v is " + initVelocityCM);
+        //Debug.Log("Period is " + Period + " s");
+        //Debug.Log("CM is at " + initPositionCM);
+        //Debug.Log("CM v is " + initVelocityCM);
     }
 
     // Center of mass position at any time

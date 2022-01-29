@@ -421,7 +421,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3853705163930917421}
   - component: {fileID: 1928299271402436712}
-  - component: {fileID: -4613335526288849025}
   m_Layer: 0
   m_Name: CoordinateTriadAlt
   m_TagString: Untagged
@@ -459,20 +458,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 2.5, z: 2.5}
   m_Center: {x: 1, y: 1, z: -1}
---- !u!114 &-4613335526288849025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3853705163930917420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49ddad263482d48a8a64365950384773, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dragPlane: 0
-  draggable: 0
 --- !u!1 &3853705164153146327
 GameObject:
   m_ObjectHideFlags: 0
