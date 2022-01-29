@@ -245,6 +245,14 @@ public class TwoBodyPrefabs : MonoBehaviour
         }
     }
 
+    public void UpdateCenterOfMass(Vector3 position)
+    {
+        if (centerOfMass)
+        {
+            centerOfMass.position = position;
+        }
+    }
+
     public void UpdateVectors()
     {
         if (positionVector1)

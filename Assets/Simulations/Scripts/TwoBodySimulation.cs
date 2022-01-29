@@ -69,12 +69,7 @@ public class TwoBodySimulation : Simulation
         if (prefabs.centerOfMass)
         {
             prefabs.centerOfMass.localScale = 0.5f * Vector3.one;
-        }
-
-        if (prefabs.angularMomentumVector)
-        {
-            prefabs.angularMomentumVector.SetPositions(Vector3.zero, 3.5f * Vector3.back);
-            prefabs.angularMomentumVector.Redraw();
+            prefabs.UpdateCenterOfMass(CenterOfMassPosition());
         }
 
         if (oneBodySim)
@@ -83,6 +78,17 @@ public class TwoBodySimulation : Simulation
         }
 
         Reset();
+    }
+
+    private void Start()
+    {
+        if (prefabs.angularMomentumVector)
+        {
+            Vector3 tailPosition = CenterOfMassPosition();
+            Debug.Log("Tail position " + tailPosition);
+            prefabs.angularMomentumVector.SetPositions(tailPosition, tailPosition + 3.5f * Vector3.back);
+            prefabs.angularMomentumVector.Redraw();
+        }
     }
 
     private void FixedUpdate()
@@ -104,7 +110,7 @@ public class TwoBodySimulation : Simulation
         // Compute the new center of mass position
         time += Time.fixedDeltaTime;
         resetTimer += Time.fixedDeltaTime;
-        Vector3 R = CenterOfMassPosition();
+        Vector3 R = CenterOfMassPosition(time);
 
         // Solve the equation of motion for r
         float substep = Time.fixedDeltaTime / numSubsteps;
@@ -114,11 +120,13 @@ public class TwoBodySimulation : Simulation
         }
 
         // Update each body's position
-        body1.position = R + (mass1 / M * r);
-        body2.position = R - (mass2 / M * r);
+        body1.position = R + (mass2 / M * r);
+        body2.position = R - (mass1 / M * r);
 
-        // Let TwoBodyPrefabs know to update its vectors
+        // Let TwoBodyPrefabs know to update its objects
         prefabs.UpdateVectors();
+        prefabs.UpdateCenterOfMass(R);
+
 
         // Update the equivalent single body if assigned
         if (oneBodySim)
@@ -171,7 +179,8 @@ public class TwoBodySimulation : Simulation
         }
 
         Debug.Log("Period is " + Period + " s");
-        Debug.Log("CM is " + initPositionCM);
+        Debug.Log("CM is at " + initPositionCM);
+        Debug.Log("CM v is " + initVelocityCM);
     }
 
     // Center of mass position at any time
