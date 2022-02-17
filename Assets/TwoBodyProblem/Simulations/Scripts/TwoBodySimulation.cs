@@ -35,17 +35,30 @@ public class TwoBodySimulation : Simulation
     private float reducedMass;
     [HideInInspector] public Vector3 r;  // r1 - r2
     [HideInInspector] public Vector3 v;  // time derivative of r
+    [HideInInspector] public float theta;  // angular coordinate in the orbital plane
 
-    // Conserved quantites
+    // Conserved quantites (evaluated in CM frame)
     private float energy;
     private float period;
-    [HideInInspector] public float angularMomentum;
+    private Vector3 angularMomentum;
+    private float magnitudeL;
+    private float semiMajorAxis;
+    private float eccentricity;
+    private float initTheta;
 
     // Properties
     public float M => totalMass;
     public float Mu => reducedMass;
     public float Energy => energy;
     public float Period => period;
+    public float L => magnitudeL;
+    public float SemiMajorAxis => semiMajorAxis;
+    public float Eccentricity => eccentricity;
+
+    // Coordinate system with angular momentum along the z-axis and x, y in the orbital plane
+    private Vector3 xHat = Vector3.right;
+    private Vector3 yHat = Vector3.up;
+    private Vector3 zHat = Vector3.forward;
 
     private void Awake()
     {
@@ -56,6 +69,13 @@ public class TwoBodySimulation : Simulation
             return;
         }
 
+        // Place the simulation at the center of mass
+        totalMass = mass1 + mass2;
+        initPositionCM = (mass1 * initPosition1 + mass2 * initPosition2) / totalMass;
+        initVelocityCM = (mass1 * initVelocity1 + mass2 * initVelocity2) / totalMass;
+        transform.position = initPositionCM;
+
+        // Create all objects
         prefabs.InstantiateAllPrefabs();
 
         body1 = prefabs.body1;
@@ -78,14 +98,21 @@ public class TwoBodySimulation : Simulation
         }
 
         Reset();
+
+        // Orbital plane coordinate system
+        zHat = angularMomentum.normalized;
+        //xHat = Quaternion.AngleAxis(-initTheta, zHat) * r.normalized;
+        xHat = -r.normalized;
+        yHat = Vector3.Cross(zHat, xHat);
     }
 
     private void Start()
     {
+        Vector3 positionCM = transform.position;
+
         if (prefabs.angularMomentumVector)
         {
-            Vector3 tailPosition = CenterOfMassPosition();
-            prefabs.angularMomentumVector.SetPositions(tailPosition, tailPosition + 3.5f * Vector3.back);
+            prefabs.angularMomentumVector.SetPositions(positionCM, positionCM + 3.5f * Vector3.back);
             prefabs.angularMomentumVector.Redraw();
         }
     }
@@ -102,30 +129,44 @@ public class TwoBodySimulation : Simulation
             resetTimer = 0;
             r = initPosition1 - initPosition2;
             v = initVelocity1 - initVelocity2;
-            body1.position = CenterOfMassPosition() + (mass2 / M * r);
-            body2.position = CenterOfMassPosition() - (mass1 / M * r);
+            body1.localPosition = mass2 / M * r;
+            body2.localPosition = -mass1 / M * r;
+
+            theta = initTheta;
         }
 
-        // Compute the new center of mass position
         time += Time.fixedDeltaTime;
         resetTimer += Time.fixedDeltaTime;
-        Vector3 R = CenterOfMassPosition(time);
 
-        // Solve the equation of motion for r
-        float substep = Time.fixedDeltaTime / numSubsteps;
-        for (int i = 1; i <= numSubsteps; i++)
+        // Move the simulation to the new CM position
+        transform.position = CenterOfMassPosition(time);
+
+        // Bound orbits
+        if (energy < 0)
         {
-            StepForward(substep);
+            // Solve the equation of motion for theta
+            float substep = Time.fixedDeltaTime / numSubsteps;
+            for (int i = 0; i < numSubsteps; i++)
+            {
+                StepForwardThetaR(substep);
+            }
+        }
+        else
+        {
+            // Solve the equation of motion for r
+            float substep = Time.fixedDeltaTime / numSubsteps;
+            for (int i = 1; i <= numSubsteps; i++)
+            {
+                StepForward(substep);
+            }
         }
 
-        // Update each body's position
-        body1.position = R + (mass2 / M * r);
-        body2.position = R - (mass1 / M * r);
+        // Update each body's position in the CM frame
+        body1.localPosition = mass2 / M * r;
+        body2.localPosition = -mass1 / M * r;
 
-        // Let TwoBodyPrefabs know to update its objects
+        // Let TwoBodyPrefabs know how to update its vectors
         prefabs.UpdateVectors();
-        prefabs.UpdateCenterOfMass(R);
-
 
         // Update the equivalent single body if assigned
         if (oneBodySim)
@@ -147,6 +188,16 @@ public class TwoBodySimulation : Simulation
         v += deltaV;
     }
 
+    private void StepForwardThetaR(float deltaTime)
+    {
+        float angularSpeed = -L / Mu / r.sqrMagnitude;
+        theta += angularSpeed * deltaTime;
+        float a = SemiMajorAxis;
+        float e = Eccentricity;
+        float rMagnitude = a * (1f - e * e) / (1f + e * Mathf.Cos(theta));
+        r = rMagnitude * (Mathf.Cos(theta) * xHat + Mathf.Sin(theta) * yHat);
+    }
+
     public override void Reset()
     {
         time = 0;
@@ -155,16 +206,16 @@ public class TwoBodySimulation : Simulation
         r = initPosition1 - initPosition2;
         v = initVelocity1 - initVelocity2;
 
-        // Compute conserved quantities
-        totalMass = mass1 + mass2;
+        // Compute conserved quantities (in CM frame)
         reducedMass = mass1 * mass2 / totalMass;
-        energy = 0.5f * reducedMass * v.sqrMagnitude - newtonG * mass1 * mass2 / r.magnitude;
+        energy = 0.5f * reducedMass * v.sqrMagnitude - newtonG * reducedMass * totalMass / r.magnitude;
+        angularMomentum = reducedMass * Vector3.Cross(r, v);
+        magnitudeL = angularMomentum.magnitude;
 
-        // Save the center of mass starting position and velocity
-        initPositionCM = (mass1 * initPosition1 + mass2 * initPosition2) / totalMass;
-        initVelocityCM = (mass1 * initVelocity1 + mass2 * initVelocity2) / totalMass;
-
-        // Compute the orbital period
+        // Compute orbital properties
+        semiMajorAxis = -0.5f * newtonG * reducedMass * totalMass / energy;
+        eccentricity = Mathf.Sqrt(1f + 2f * energy * Mathf.Pow(magnitudeL / newtonG / reducedMass / totalMass, 2) / reducedMass);
+        // Period and initial theta
         if (energy >= 0)
         {
             // Unbound orbit
@@ -173,8 +224,14 @@ public class TwoBodySimulation : Simulation
         else
         {
             // Bound orbit
-            float a = -0.5f * newtonG * mass1 * mass2 / energy;
+            float a = semiMajorAxis;
             period = 2 * Mathf.PI * Mathf.Sqrt(a * a * a / newtonG / totalMass);
+
+            float e = eccentricity;
+            // Avoid NANs by making sure the argument of arccos is strictly between -1 and 1
+            float arg = Mathf.Clamp(((a * (1f - e * e) / r.magnitude) - 1f) / e, -1f, 1f);
+            initTheta = Mathf.Acos(arg);
+            theta = initTheta;
         }
 
         //Debug.Log("Period is " + Period + " s");

@@ -6981,18 +6981,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paused: 0
   newtonG: 80
-  numSubsteps: 100
+  numSubsteps: 10
   mass1: 1.5
   mass2: 0.5
   initPosition1: {x: -3.4, y: 0, z: 0}
   initPosition2: {x: 2.2, y: 0, z: 0}
-  initVelocity1: {x: 0, y: -1, z: 0}
-  initVelocity2: {x: 0, y: 3, z: 0}
+  initVelocity1: {x: 0, y: 1, z: 0}
+  initVelocity2: {x: 0, y: -3, z: 0}
   oneBodySim: {fileID: 1246590777}
   oneBodyOffset: {x: 10, y: 0, z: 0}
   r: {x: 0, y: 0, z: 0}
   v: {x: 0, y: 0, z: 0}
-  angularMomentum: 0
+  theta: 0
 --- !u!114 &1183923585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10454,7 +10454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paused: 0
   newtonG: 40
-  numSubsteps: 100
+  numSubsteps: 10
   mass1: 1
   mass2: 20
   initPosition1: {x: -4, y: 3, z: 0}
@@ -10465,7 +10465,7 @@ MonoBehaviour:
   oneBodyOffset: {x: 0, y: 0, z: 0}
   r: {x: -2, y: 0, z: 0}
   v: {x: 0, y: 2, z: 0}
-  angularMomentum: 0
+  theta: 0
 --- !u!114 &1818923987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10478,9 +10478,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f940b12fe71d4335838907599a71856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body1Prefab: {fileID: 2171326627312178918, guid: bd908972e61ac48fda100618296f2445,
+  body1Prefab: {fileID: 2171326627312178918, guid: 9dfb8040245ab434baa82164cacc06a0,
     type: 3}
-  body2Prefab: {fileID: 5700253702422817882, guid: 745e127ed83b04fad97fcfa39e94e66e,
+  body2Prefab: {fileID: 5700253702422817882, guid: 9afd301a2d27648d59fd91211babfd83,
     type: 3}
   coordinateOriginPrefab: {fileID: 0}
   centerOfMassPrefab: {fileID: 1208157535638110807, guid: b8c0e9ba1c6084be68b8a820c5638988,
