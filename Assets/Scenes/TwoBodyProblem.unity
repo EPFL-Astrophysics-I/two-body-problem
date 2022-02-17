@@ -4787,7 +4787,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 736254659}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -5644,10 +5644,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The coordinate system shown here is one option, and it allows us to write
-    the two equations of motion. Better choices of origin are possible, though, such
-    as the position of the <color=red>center of mass</color>, which will simplify
-    further calculations.
+  m_text: The coordinate system here is one option, and we can visualize the relevant
+    equation of motion vectors with respect to it. As we will see, another choice
+    of origin would be better, namely the position of the <color=red>center of mass</color>,
+    as it will simplify our mathematical description.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 350cfcf20da78478f9197161ac83b480, type: 2}
   m_sharedMaterial: {fileID: -1129015340585624399, guid: 350cfcf20da78478f9197161ac83b480,
@@ -9664,9 +9664,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Le rep\xE8re pr\xE9sent\xE9 ici est un des choix possibles, ce qui nous
-    permet d\u2019\xE9crire les deux \xE9quations du mouvement. Il existe pourtant
-    de meilleurs choix d\u2019origine qui peuvent simplifier nos calculs, par exemple
-    la position du <color=red>centre de masse</color>."
+    permet de visualiser les vecteurs figurant dans les \xE9quations du mouvement.
+    Il existe pourtant de meilleurs choix d\u2019origine qui peuvent simplifier nos
+    calculs, par exemple la position du <color=red>centre de masse</color>."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 350cfcf20da78478f9197161ac83b480, type: 2}
   m_sharedMaterial: {fileID: -1129015340585624399, guid: 350cfcf20da78478f9197161ac83b480,
@@ -13184,7 +13184,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2422021412821847185}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
