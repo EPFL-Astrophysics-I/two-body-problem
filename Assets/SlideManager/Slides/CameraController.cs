@@ -24,6 +24,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float minZoom = 5;
     [SerializeField] private float maxZoom = 50;
 
+    [SerializeField] private AnimationCurve rotationCurve;
+
     private Camera mainCamera;
     private Coroutine cameraMoving;
     private Coroutine cameraChangingColor;
@@ -132,11 +134,13 @@ public class CameraController : MonoBehaviour
 
     public void InitializeCamera()
     {
-        if (mainCamera.backgroundColor != backgroundColor)
+        if (!CompareRGB(mainCamera.backgroundColor, backgroundColor))
         {
             cameraChangingColor = StartCoroutine(LerpBackgroundColor(backgroundColor, colorTransitionTime));
-            SendMessageUpwards("HandleThemeChange", backgroundColor, SendMessageOptions.DontRequireReceiver);
         }
+
+        // Let SlideManager know the slide's background color to trigger LanguageToggle
+        SendMessageUpwards("HandleThemeChange", backgroundColor, SendMessageOptions.DontRequireReceiver);
 
         // Always put the camera in perspective mode when moving
         mainCamera.orthographic = false;
@@ -163,7 +167,7 @@ public class CameraController : MonoBehaviour
             float t = time / slideTime;
             t = t * t * (3f - 2f * t);  // Apply some smoothing
             mainCamera.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
-            mainCamera.transform.rotation = Quaternion.Lerp(startRotation, targetRotation, t);
+            mainCamera.transform.rotation = Quaternion.Lerp(startRotation, targetRotation, rotationCurve.Evaluate(time / slideTime));
             mainCamera.fieldOfView = Mathf.Lerp(startFOV, targetFOV, t);
             yield return null;
         }
@@ -194,5 +198,10 @@ public class CameraController : MonoBehaviour
         }
 
         mainCamera.backgroundColor = targetColor;
+    }
+
+    private bool CompareRGB(Color color1, Color color2)
+    {
+        return (color1.r == color2.r) && (color1.g == color2.g) && (color1.b == color2.b);
     }
 }

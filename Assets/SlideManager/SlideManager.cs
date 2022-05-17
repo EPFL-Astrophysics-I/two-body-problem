@@ -12,6 +12,8 @@ public class SlideManager : MonoBehaviour
     [SerializeField, Min(0)] private float fadeInDelay = 0f;
     [SerializeField, Min(0)] private float fadeOutTime = 0.3f;
     [SerializeField, Min(0)] private float fadeOutDelay = 0f;
+
+    [Header("Game Events")]
     [SerializeField] private GameEvent onChangeSlide;
 
     private Transform slides;
@@ -36,11 +38,8 @@ public class SlideManager : MonoBehaviour
         // Hide all UI elements of each slide using its CanvasGroup
         foreach (var canvasGroup in GetComponentsInChildren<CanvasGroup>())
         {
-            if (canvasGroup.CompareTag("Slide"))
-            {
-                canvasGroup.alpha = 0;
-                canvasGroup.blocksRaycasts = false;
-            }
+            canvasGroup.alpha = 0;
+            canvasGroup.blocksRaycasts = false;
         }
 
         // Turn off all simulations initially that have an associated SlideController
@@ -201,10 +200,14 @@ public class SlideManager : MonoBehaviour
 
     public void HandleThemeChange(Color backgroundColor)
     {
-        // Let LanguageToggle know to invert color theme
-        if (backgroundColor == Color.white || backgroundColor == Color.black)
+        if (backgroundColor == Color.white)
         {
-            BroadcastMessage("InvertColors", SendMessageOptions.DontRequireReceiver);
+            BroadcastMessage("SetLightTheme", SendMessageOptions.DontRequireReceiver);
+        }
+
+        if (backgroundColor == Color.black)
+        {
+            BroadcastMessage("SetDarkTheme", SendMessageOptions.DontRequireReceiver);
         }
     }
 }
